@@ -1,7 +1,12 @@
 package model;
 
+import model.Ball;
+
 
 class Tile {
+
+  @:isVar
+  public var ball (get, set) : Ball;
 
   public var x (get, null) : Int;
   public var y (get, null) : Int;
@@ -17,6 +22,14 @@ class Tile {
 
   private function get_y() : Int {
     return y;
+  }
+
+  private function get_ball() : Ball {
+    return ball;
+  }
+
+  private function set_ball(ball : Ball) : Ball {
+    return this.ball = ball;
   }
 
 }

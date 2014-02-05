@@ -7,11 +7,11 @@ import model.Color;
 
 class Board {
 
-  private var tiles (get, null) : Array<Tile>;
-  private var balls (get, null) : Array<Ball>;
+  public var tiles (get, null) : Array<Tile>;
+  public var balls (get, null) : Array<Ball>;
 
-  private var width (get, null) : Int;
-  private var height (get, null) : Int;
+  public var width (get, null) : Int;
+  public var height (get, null) : Int;
 
   public function new(width : Int, height : Int) {
     this.width = width;
@@ -22,9 +22,23 @@ class Board {
     create_tiles();
   }
 
-  public function spawn_ball_at(tile : Tile, color : Color) : Ball {
-    var ball = new Ball(tile, color);
-    balls.push(ball);
+  private function tiles_without_ball() : Array<Tile> {
+    var tiles_without_ball : Array<Tile> = [];
+    for (tile in tiles) {
+      if (ball_at(tile.x, tile.y) == null) {
+        tiles_without_ball.push(tile);
+      }
+    }
+    return tiles_without_ball;
+  }
+
+  public function spawn_ball() : Ball {
+    var available_tiles = tiles_without_ball();
+    var index = Std.random(available_tiles.length);
+    var tile = available_tiles[index];
+    var ball = new Ball();
+    ball.x = tile.x;
+    ball.y = tile.y;
     return ball;
   }
 
@@ -37,9 +51,9 @@ class Board {
     return null;
   }
 
-  public function ball_at(tile : Tile) : Ball {
+  public function ball_at(x : Int, y : Int) : Ball {
     for (ball in balls) {
-      if (ball.tile == tile) {
+      if (ball.x == x && ball.y == y) {
         return ball;
       }
     }
@@ -48,7 +62,7 @@ class Board {
 
   private function create_tiles() {
     for (i in 0...height) {
-      for (j in 0...(width - height % 2)) {
+      for (j in 0...(width - i % 2)) {
         tiles.push(new Tile(j, i));
       }
     }
@@ -67,7 +81,7 @@ class Board {
   }
 
   private function get_balls() : Array<Ball> {
-    return valls;
+    return balls;
   }
 
 }

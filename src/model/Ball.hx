@@ -7,25 +7,35 @@ import model.Color;
 class Ball {
 
   @:isVar
-  public var tile (get, set) : Tile;
+  public var x (get, set) : Int;
+
+  @:isVar
+  public var y (get, set) : Int;
 
   public var color (get, null) : Color;
 
-  public function new(tile : Tile, color : Color) {
-    this.color = color;
-    this.tile = tile;
+  public function new() {
+    this.color = Colors.random();
   }
 
   private function get_color() : Color {
     return color;
   }
 
-  private function get_tile() : Tile {
-    return tile;
+  private function get_x() : Int {
+    return x;
   }
 
-  private function set_tile(tile : Tile) : Tile {
-    return this.tile = tile;
+  private function set_x(x : Int) : Int {
+    return this.x = x;
+  }
+
+  private function get_y() : Int {
+    return y;
+  }
+
+  private function set_y(y : Int) : Int {
+    return this.y = y;
   }
 
 }
