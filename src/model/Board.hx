@@ -7,6 +7,7 @@ import model.Ball;
 import model.Color;
 
 import util.PathFind;
+import util.LinesFind;
 
 
 class Board extends Model {
@@ -63,8 +64,15 @@ class Board extends Model {
   }
 
   public function destroy_lines() : Bool {
-    // TODO: Find lines.
-    return false;
+    var balls = new LinesFind(this).run();
+    var result = balls.length > 0;
+
+    for (ball in balls) {
+      trigger_event('board_ball_destroy', ball);
+      this.balls.remove(ball);
+    }
+
+    return result;
   }
 
   public function can_move(ball : Ball, tile : Tile) {

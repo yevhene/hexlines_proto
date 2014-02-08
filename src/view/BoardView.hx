@@ -30,14 +30,20 @@ class BoardView extends Sprite {
     tile_views = [];
     ball_views = [];
 
-    this.board.add_event_listener('board_ball_new', function(ball : Ball) {
+    board.add_event_listener('board_ball_new', function(ball : Ball) {
       add_ball_view_for(ball);
     });
 
-    this.board.add_event_listener('board_ball_moved', function(ball : Ball) {
+    board.add_event_listener('board_ball_moved', function(ball : Ball) {
       var ball_view = get_ball_view_for(ball);
       ball_view.x = screen_x(ball.x, ball.y);
       ball_view.y = screen_y(ball.x, ball.y);
+    });
+
+    board.add_event_listener('board_ball_destroy', function (ball : Ball) : Void {
+      var ball_view = get_ball_view_for(ball);
+      ball_views.remove(ball_view);
+      removeChild(ball_view);
     });
 
     init_view();

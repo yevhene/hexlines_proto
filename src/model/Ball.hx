@@ -22,6 +22,10 @@ class Ball extends Model {
     this.color = Colors.random();
   }
 
+  public function destroy() {
+    trigger_event('ball_destroy', this);
+  }
+
   private function get_color() : Color {
     return color;
   }
