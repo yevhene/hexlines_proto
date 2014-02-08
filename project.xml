@@ -5,6 +5,7 @@
   <app main="Main" path="bin" file="hexlines" />
 
   <source path="src" />
+  <source path="lib" />
 
   <haxelib name="openfl" />
 

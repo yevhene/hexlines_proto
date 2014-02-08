@@ -28,6 +28,17 @@ class BoardView extends Sprite {
     this.w = w;
     this.h = h;
     tile_views = [];
+    ball_views = [];
+
+    this.board.add_event_listener('board_ball_new', function(ball : Ball) {
+      add_ball_view_for(ball);
+    });
+
+    this.board.add_event_listener('board_ball_moved', function(ball : Ball) {
+      var ball_view = get_ball_view_for(ball);
+      ball_view.x = screen_x(ball.x, ball.y);
+      ball_view.y = screen_y(ball.x, ball.y);
+    });
 
     init_view();
   }
@@ -60,15 +71,31 @@ class BoardView extends Sprite {
     }
   }
 
+  public function get_ball_view_for(ball : Ball) {
+    for (ball_view in ball_views) {
+      if (ball_view.ball == ball) {
+        return ball_view;
+      }
+    }
+    return null;
+  }
+
   public function add_ball_view_for(ball : Ball) {
     var ball_view = new BallView(ball, tile_w, tile_h);
     ball_view.x = screen_x(ball.x, ball.y);
     ball_view.y = screen_y(ball.x, ball.y);
+    ball_views.push(ball_view);
     addChild(ball_view);
   }
 
   private function get_board() : Board {
     return board;
+  }
+
+  public function set_active_ball_view_for(ball : Ball) {
+    for (ball_view in ball_views) {
+      ball_view.active = ball_view.ball == ball;
+    }
   }
 
 }

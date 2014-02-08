@@ -1,8 +1,10 @@
 package view;
 
 import flash.display.Sprite;
+import flash.events.MouseEvent;
 
 import model.Tile;
+import controller.Game;
 
 
 class TileView extends Sprite {
@@ -20,10 +22,12 @@ class TileView extends Sprite {
     this.h = h;
 
     init_view();
+
+    addEventListener(MouseEvent.CLICK, on_click);
   }
 
   private function init_view() {
-    graphics.lineStyle(1, 0xff0000);
+    graphics.lineStyle(1, 0x000000);
     graphics.beginFill(0xffffff);
     graphics.moveTo( 0        , h / 2 );
     graphics.lineTo( w / 4    , 0     );
@@ -36,5 +40,9 @@ class TileView extends Sprite {
 
   private function get_tile() : Tile {
     return tile;
+  }
+
+  private function on_click(event) {
+    Game.get_instance().trigger_event('tile_activation', tile);
   }
 }

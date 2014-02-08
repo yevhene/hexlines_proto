@@ -5,13 +5,15 @@ import flash.events.MouseEvent;
 
 import model.Ball;
 import model.Color;
+import controller.Game;
 
 
 class BallView extends Sprite {
 
   public var ball (get, null) : Ball;
 
-  public var active (get, null) : Bool;
+  @:isVar
+  public var active (get, set) : Bool;
 
   private var w : Float;
   private var h : Float;
@@ -23,14 +25,12 @@ class BallView extends Sprite {
     this.w = w;
     this.h = h;
 
-    active = false;
-
     draw();
     addEventListener(MouseEvent.CLICK, on_click);
   }
 
   private function draw() {
-    graphics.lineStyle(1, Colors.toInt(ball.color));
+    graphics.lineStyle(3, Colors.toInt(ball.color));
     if (active) {
       graphics.beginFill(Colors.toInt(ball.color));
     } else {
@@ -48,9 +48,14 @@ class BallView extends Sprite {
     return active;
   }
 
-  private function on_click(event) {
-    active = !active;
+  private function set_active(active : Bool) : Bool {
+    this.active = active;
     draw();
+    return this.active;
+  }
+
+  private function on_click(event) {
+    Game.get_instance().trigger_event('ball_activation', ball);
   }
 
 }

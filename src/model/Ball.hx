@@ -1,10 +1,12 @@
 package model;
 
+import core.Model;
+
 import model.Tile;
 import model.Color;
 
 
-class Ball {
+class Ball extends Model {
 
   @:isVar
   public var x (get, set) : Int;
@@ -15,6 +17,8 @@ class Ball {
   public var color (get, null) : Color;
 
   public function new() {
+    super();
+
     this.color = Colors.random();
   }
 

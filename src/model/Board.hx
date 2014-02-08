@@ -1,11 +1,15 @@
 package model;
 
+import core.Model;
+
 import model.Tile;
 import model.Ball;
 import model.Color;
 
+import util.PathFind;
 
-class Board {
+
+class Board extends Model {
 
   public var tiles (get, null) : Array<Tile>;
   public var balls (get, null) : Array<Ball>;
@@ -14,6 +18,8 @@ class Board {
   public var height (get, null) : Int;
 
   public function new(width : Int, height : Int) {
+    super();
+
     this.width = width;
     this.height = height;
 
@@ -39,7 +45,30 @@ class Board {
     var ball = new Ball();
     ball.x = tile.x;
     ball.y = tile.y;
+    balls.push(ball);
+
+    trigger_event('board_ball_new', ball);
+
     return ball;
+  }
+
+  public function move(ball : Ball, tile : Tile) : Bool {
+    if (can_move(ball, tile)) {
+      ball.x = tile.x;
+      ball.y = tile.y;
+      trigger_event('board_ball_moved', ball);
+      return true;
+    }
+    return false;
+  }
+
+  public function destroy_lines() : Bool {
+    // TODO: Find lines.
+    return false;
+  }
+
+  public function can_move(ball : Ball, tile : Tile) {
+    return new PathFind(this, tile_at(ball.x, ball.y), tile).run();
   }
 
   public function tile_at(x : Int, y : Int) : Tile {

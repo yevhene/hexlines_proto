@@ -1,9 +1,11 @@
 package model;
 
+import core.Model;
+
 import model.Ball;
 
 
-class Tile {
+class Tile extends Model {
 
   @:isVar
   public var ball (get, set) : Ball;
@@ -12,6 +14,8 @@ class Tile {
   public var y (get, null) : Int;
 
   public function new(x : Int, y : Int) {
+    super();
+
     this.x = x;
     this.y = y;
   }
