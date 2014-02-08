@@ -55,11 +55,63 @@ class LinesFind {
   }
 
   private function check_ascending_diagonal_line_for(ball : Ball) : Bool {
-    return false;
+    var x = ball.x;
+    var y = ball.y;
+    var up_count = -1;
+    var b = null;
+    do {
+      up_count += 1;
+      if (y % 2 == 1) {
+        x += 1;
+      }
+      y -= 1;
+      b = board.ball_at(x, y);
+    } while (b != null && b.color == ball.color);
+
+    x = ball.x;
+    y = ball.y;
+    var down_count = -1;
+    b = null;
+    do {
+      down_count += 1;
+      if (y % 2 == 0) {
+        x -= 1;
+      }
+      y += 1;
+      b = board.ball_at(x, y);
+    } while (b != null && b.color == ball.color);
+
+    return up_count + 1 + down_count >= BALLS_IN_LINE;
   }
 
   private function check_descending_diagonal_line_for(ball : Ball) : Bool {
-    return false;
+    var x = ball.x;
+    var y = ball.y;
+    var up_count = -1;
+    var b = null;
+    do {
+      up_count += 1;
+      if (y % 2 == 1) {
+        x += 1;
+      }
+      y += 1;
+      b = board.ball_at(x, y);
+    } while (b != null && b.color == ball.color);
+
+    x = ball.x;
+    y = ball.y;
+    var down_count = -1;
+    b = null;
+    do {
+      down_count += 1;
+      if (y % 2 == 0) {
+        x -= 1;
+      }
+      y -= 1;
+      b = board.ball_at(x, y);
+    } while (b != null && b.color == ball.color);
+
+    return up_count + 1 + down_count >= BALLS_IN_LINE;
   }
 
 
